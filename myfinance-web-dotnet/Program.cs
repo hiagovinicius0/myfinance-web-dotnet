@@ -3,7 +3,7 @@ using myfinance_web_dotnet_service;
 using myfinance_web_dotnet_service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
+System.AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyFinanceDbContext>();
