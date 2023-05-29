@@ -41,7 +41,7 @@ namespace myfinance_web_dotnet_service
 
 	List<Transaction> ITransactionService.ListAll()
 	{
-	  var dbSet = _dbContext.Transaction.Include(x => x.PlanAccount);
+	  var dbSet = _dbContext.Transaction!.Include(x => x.PlanAccount);
 	  if (dbSet == null)
 	  {
 		throw new FileLoadException();
