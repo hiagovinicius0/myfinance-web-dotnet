@@ -12,26 +12,26 @@ namespace myfinance_web_dotnet_service
 	{
 	  _dbContext = dbContext;
 	}
-	void ITransactionService.Cadastrar(Transaction Entidade)
+	void ITransactionService.Upsert(Transaction entity)
 	{
 	  var dbSet = _dbContext.Transaction;
 	  if (dbSet == null)
 	  {
 		throw new FileLoadException();
 	  }
-	  if (Entidade.Id == null)
+	  if (entity.Id == null)
 	  {
-		dbSet.Add(Entidade);
+		dbSet.Add(entity);
 		_dbContext.SaveChanges();
 		return;
 	  }
 
-	  dbSet.Attach(Entidade);
-	  _dbContext.Entry(Entidade).State = EntityState.Modified;
+	  dbSet.Attach(entity);
+	  _dbContext.Entry(entity).State = EntityState.Modified;
 	  _dbContext.SaveChanges();
 	}
 
-	void ITransactionService.Excluir(int Id)
+	void ITransactionService.Delete(int Id)
 	{
 	  var transaction = new Transaction() { Id = Id };
 	  _dbContext.Attach(transaction);
@@ -39,7 +39,7 @@ namespace myfinance_web_dotnet_service
 	  _dbContext.SaveChanges();
 	}
 
-	List<Transaction> ITransactionService.ListarRegistros()
+	List<Transaction> ITransactionService.ListAll()
 	{
 	  var dbSet = _dbContext.Transaction;
 	  if (dbSet == null)
@@ -49,9 +49,8 @@ namespace myfinance_web_dotnet_service
 	  return dbSet.ToList();
 	}
 
-	Transaction ITransactionService.RetornarRegistro(int Id)
+	Transaction ITransactionService.ListOne(int Id)
 	{
-	  //var Transaction = _dbContext.Transaction.Where(x => x.Id == Id).First();
 	  var dbSet = _dbContext.Transaction;
 	  if (dbSet == null)
 	  {

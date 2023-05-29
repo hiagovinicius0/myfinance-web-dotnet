@@ -3,7 +3,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<button type="button" class="btn btn-block btn-primary" onclick="Novo()">Criar item de Plano de Conta</button>
+<button type="button" class="btn btn-block btn-primary" onclick="New()">Criar item de Plano de Conta</button>
 <br><br>
 <table class="table table-bordered">
 	<tr>
@@ -14,28 +14,28 @@
 		<th>#</th>
 	</tr>
 	@{
-			foreach(var item in Model)
-			{
-				<tr>
-					<td>@item.Id</td>
-					<td>@item.Description</td>
-					<td>@item.Type</td>
-					<td><button type="button" class="btn btn-block btn-outline-warning" onclick="Atualizar(@item.Id.ToString())">Editar</button></td>
-					<td><button type="button" class="btn btn-block btn-outline-danger" onclick="Excluir(@item.Id.ToString())">Excluir</button></td>
-				</tr>
-			}
+		foreach(var item in Model)
+		{
+			<tr>
+				<td>@item.Id</td>
+				<td>@item.Description</td>
+				<td>@item.Type</td>
+				<td><button type="button" class="btn btn-block btn-outline-warning" onclick="Update(@item.Id.ToString())">Editar</button></td>
+				<td><button type="button" class="btn btn-block btn-outline-danger" onclick="Delete(@item.Id.ToString())">Excluir</button></td>
+			</tr>
+		}
 	}
 </table>
 <script>
-	function Novo(){
-		window.location.href = '../PlanAccount/Cadastrar';
+	function New(){
+		window.location.href = '../PlanAccount/Create';
 	}
 
-	function Atualizar(id){
-		window.location.href = '../PlanAccount/Cadastrar/'+ id;
+	function Update(id){
+		window.location.href = '../PlanAccount/Create/'+ id;
 	}
 
-	function Excluir(id){
-		window.location.href = '../PlanAccount/Excluir/'+ id;
+	function Delete(id){
+		window.location.href = '../PlanAccount/Delete/'+ id;
 	}
 </script>

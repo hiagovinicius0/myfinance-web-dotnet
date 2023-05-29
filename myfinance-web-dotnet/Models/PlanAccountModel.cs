@@ -1,6 +1,6 @@
 namespace myfinance_web_dotnet_domain.Models;
 
-public class PlanAccountViewModel
+public class PlanAccountModel
 {
   public int? Id { get; set; }
 

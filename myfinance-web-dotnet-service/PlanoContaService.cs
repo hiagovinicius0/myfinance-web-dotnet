@@ -12,26 +12,26 @@ namespace myfinance_web_dotnet_service
 	{
 	  _dbContext = dbContext;
 	}
-	void IPlanAccountService.Cadastrar(PlanAccount Entidade)
+	void IPlanAccountService.Upsert(PlanAccount entity)
 	{
 	  var dbSet = _dbContext.PlanAccount;
 	  if (dbSet == null)
 	  {
 		throw new FileLoadException();
 	  }
-	  if (Entidade.Id == null)
+	  if (entity.Id == null)
 	  {
-		dbSet.Add(Entidade);
+		dbSet.Add(entity);
 		_dbContext.SaveChanges();
 		return;
 	  }
 
-	  dbSet.Attach(Entidade);
-	  _dbContext.Entry(Entidade).State = EntityState.Modified;
+	  dbSet.Attach(entity);
+	  _dbContext.Entry(entity).State = EntityState.Modified;
 	  _dbContext.SaveChanges();
 	}
 
-	void IPlanAccountService.Excluir(int Id)
+	void IPlanAccountService.Delete(int Id)
 	{
 	  var planAccount = new PlanAccount() { Id = Id };
 	  _dbContext.Attach(planAccount);
@@ -39,7 +39,7 @@ namespace myfinance_web_dotnet_service
 	  _dbContext.SaveChanges();
 	}
 
-	List<PlanAccount> IPlanAccountService.ListarRegistros()
+	List<PlanAccount> IPlanAccountService.ListAll()
 	{
 	  var dbSet = _dbContext.PlanAccount;
 	  if (dbSet == null)
@@ -49,7 +49,7 @@ namespace myfinance_web_dotnet_service
 	  return dbSet.ToList();
 	}
 
-	PlanAccount IPlanAccountService.RetornarRegistro(int Id)
+	PlanAccount IPlanAccountService.ListOne(int Id)
 	{
 	  //var PlanAccount = _dbContext.PlanAccount.Where(x => x.Id == Id).First();
 	  var dbSet = _dbContext.PlanAccount;
