@@ -41,7 +41,7 @@ namespace myfinance_web_dotnet.Controllers
 		  History = item.History,
 		  PlanAccountId = item.PlanAccountId,
 		  Value = item.Value,
-		  Type = item.PlanAccount!.Type,
+		  Type = item.PlanAccount.Type,
 		};
 		listTransactionModel.Add(itemTransaction);
 	  }

@@ -1,68 +1,35 @@
-using Microsoft.EntityFrameworkCore;
 using myfinance_web_dotnet_domain.Entities;
-using myfinance_web_dotnet_infra;
+using myfinance_web_dotnet_infra.Interfaces;
 using myfinance_web_dotnet_service.Interfaces;
 
 namespace myfinance_web_dotnet_service
 {
   public class PlanAccountService : IPlanAccountService
   {
-	private readonly MyFinanceDbContext _dbContext;
-	public PlanAccountService(MyFinanceDbContext dbContext)
+	private readonly IPlanAccountRepository _iPlanAccountRepository;
+	public PlanAccountService(IPlanAccountRepository iPlanAccountRepository)
 	{
-	  _dbContext = dbContext;
-	}
-	void IPlanAccountService.Upsert(PlanAccount entity)
-	{
-	  var dbSet = _dbContext.PlanAccount;
-	  if (dbSet == null)
-	  {
-		throw new FileLoadException();
-	  }
-	  if (entity.Id == null)
-	  {
-		dbSet.Add(entity);
-		_dbContext.SaveChanges();
-		return;
-	  }
-
-	  dbSet.Attach(entity);
-	  _dbContext.Entry(entity).State = EntityState.Modified;
-	  _dbContext.SaveChanges();
+	  _iPlanAccountRepository = iPlanAccountRepository;
 	}
 
-	void IPlanAccountService.Delete(int Id)
+	public void Delete(int Id)
 	{
-	  var planAccount = new PlanAccount() { Id = Id };
-	  _dbContext.Attach(planAccount);
-	  _dbContext.Remove(planAccount);
-	  _dbContext.SaveChanges();
+	  _iPlanAccountRepository.Delete(Id);
 	}
 
-	List<PlanAccount> IPlanAccountService.ListAll()
+	public List<PlanAccount> ListAll()
 	{
-	  var dbSet = _dbContext.PlanAccount;
-	  if (dbSet == null)
-	  {
-		throw new FileLoadException();
-	  }
-	  return dbSet.ToList();
+	  return _iPlanAccountRepository.ListAll();
 	}
 
-	PlanAccount IPlanAccountService.ListOne(int Id)
+	public PlanAccount ListOne(int Id)
 	{
-	  //var PlanAccount = _dbContext.PlanAccount.Where(x => x.Id == Id).First();
-	  var dbSet = _dbContext.PlanAccount;
-	  if (dbSet == null)
-	  {
-		throw new FileLoadException();
-	  }
-	  var planAccount = dbSet.Where(x => x.Id == Id).First();
-	  if (planAccount == null)
-	  {
-		throw new KeyNotFoundException();
-	  }
-	  return planAccount;
+	  return _iPlanAccountRepository.ListOne(Id);
+	}
+
+	public void Upsert(PlanAccount entity)
+	{
+	  _iPlanAccountRepository.Upsert(entity);
 	}
   }
 }

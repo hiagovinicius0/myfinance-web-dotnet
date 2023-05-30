@@ -1,4 +1,6 @@
 using myfinance_web_dotnet_infra;
+using myfinance_web_dotnet_infra.Interfaces;
+using myfinance_web_dotnet_infra.Repositories;
 using myfinance_web_dotnet_service;
 using myfinance_web_dotnet_service.Interfaces;
 
@@ -7,8 +9,14 @@ System.AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyFinanceDbContext>();
+
+//Services
 builder.Services.AddScoped<IPlanAccountService, PlanAccountService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+//Repositories
+builder.Services.AddScoped<IPlanAccountRepository, PlanAccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 var app = builder.Build();
 
